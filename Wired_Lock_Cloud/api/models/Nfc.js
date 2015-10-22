@@ -8,7 +8,14 @@
 module.exports = {
 
   attributes: {
-
+  	numCard:{
+  		type: 'int',
+  		required: true
+  	},
+  	owners: {
+  		collection: 'User',
+  		via: 'nfcCards'
+  	}
   }
 };
 

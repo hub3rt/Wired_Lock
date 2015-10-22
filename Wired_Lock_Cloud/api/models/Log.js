@@ -8,7 +8,17 @@
 module.exports = {
 
   attributes: {
-
+  	date:'date',
+  	userName:{
+  		name:'User',
+  		via: 'name'
+  	},
+  	doorName:{
+  		name: 'Door',
+  		via: 'name'
+  	},
+  	info: 'String',
+  	photo: 'String'
   }
 };
 

@@ -8,7 +8,14 @@
 module.exports = {
 
   attributes: {
-
+  	name:{
+  		type:'string',
+  		required: true
+  	},
+  	owners: {
+  		collection: 'User',
+  		via: 'doors'
+  	}
   }
 };
 

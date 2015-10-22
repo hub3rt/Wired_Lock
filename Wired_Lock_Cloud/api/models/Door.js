@@ -12,10 +12,13 @@ module.exports = {
   		type:'string',
   		required: true
   	},
+  	state: {
+  		type:'boolean',
+		required: true
+  	},
   	owners: {
   		collection: 'User',
   		via: 'doors'
   	}
   }
 };
-

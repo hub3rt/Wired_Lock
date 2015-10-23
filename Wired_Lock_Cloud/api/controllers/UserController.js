@@ -1,5 +1,5 @@
 /**
- * UserController
+ * userController
  *
  * @description :: Server-side logic for managing users
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
@@ -7,99 +7,134 @@
 
 module.exports = {
 	
-	index: function (req, res) {
+	// a CREATE action  
+    create: function(req, res, next) {
 
-	User.findAll(function(err, users){
-		if (err) return res.send(err, 500);
+        var params = req.params.all();
 
-		res.view({
-			model: users
-		});
-	});
-},
+        User.create(params, function(err, user) {
 
-	'new': function(req,res) {
-		res.view();
-	},
+            if (err) return next(err);
 
-  create: function(req,res) {
-  	var params = _.extend(req.query || {}, req.params || {}, req.body || {});
+            res.status(201);
 
-  	User.create(params, function userCreated (err, createdUser) {
+            res.json(user);
 
-  		if (err) return res.send(err,500);
+        });
 
-  		res.redirect('/user/show/'+ createdUser.id);
-  	});
-  },
+    },
 
-  show: function (req,res) {
-  	
-  	var id = req.param('id')
+    // a FIND action
+    find: function(req, res, next) {
 
-  	if (!id) return res.send("No id specified.", 500);
+        var id = req.param('id');
+
+        var idShortCut = isShortcut(id);
+
+        if (idShortCut === true) {
+            return next();
+        }
+
+        if (id) {
+
+            User.findOne(id, function(err, user) {
+
+                if (user === undefined) return res.notFound();
+
+                if (err) return next(err);
+
+                res.json(user);
+
+            });
+
+        } else {
+
+            var where = req.param('where');
+
+            if (_.isString(where)) {
+                where = JSON.parse(where);
+            }
+
+            var options = {
+                limit: req.param('limit') || undefined,
+                skip: req.param('skip') || undefined,
+                sort: req.param('sort') || undefined,
+                where: where || undefined
+            };
+
+            User.find(options, function(err, user) {
+
+                if (user === undefined) return res.notFound();
+
+                if (err) return next(err);
+
+                res.json(user);
+
+            });
+
+        }
+
+        function isShortcut(id) {
+            if (id === 'find' || id === 'update' || id === 'create' || id === 'destroy') {
+                return true;
+            }
+        }
+
+    },
+
+    // an UPDATE action
+    update: function(req, res, next) {
+
+        var criteria = {};
+
+        criteria = _.merge({}, req.params.all(), req.body);
+
+        var id = req.param('id');
+
+        if (!id) {
+            return res.badRequest('No id provided.');
+        }
+
+        User.update(id, criteria, function(err, user) {
+
+            if (user.length === 0) return res.notFound();
+
+            if (err) return next(err);
+
+            res.json(user);
+
+        });
+
+    },
+
+    // a DESTROY action
+    destroy: function(req, res, next) {
+
+        var id = req.param('id');
+
+        if (!id) {
+            return res.badRequest('No id provided.');
+        }
+
+        User.findOne(id).done(function(err, result) {
+            if (err) return res.serverError(err);
+
+            if (!result) return res.notFound();
+
+            user.destroy(id, function(err) {
+
+                if (err) return next(err);
+
+                return res.json(result);
+            });
+
+        });
+    },
 
 
-  	User.find(id, function userFound(err, user) {
-  		if(err) return res.sender(err,500);
-  		if(!user) return res.send("User "+id+" not found", 404);
-
-  		res.view({
-  			user:user
-  		})
-  	});
-  },
-
-  edit: function (req,res) {
-    var id = req.param('id');
-    
-    if (!id) return res.send("No id specified.",500);
-
-    User.find(id, function userFound (err,user){
-      if (err) return res.send(err,500);
-      if (!user) return res.send("User "+id+" not found.",404);
-
-      res.view({
-        user: user
-      })
-    });
-  },
-
-  
-  update: function (req,res) {
-
-    var params = _.extend(req.query || {}, req.params || {}, req.body || {});
-    var id = params.id;
-    
-    if (!id) return res.send("No id specified.",500);
-
-    User.update(id, params, function userUpdated(err, updatedUser) {
-      if (err) {
-        res.redirect('/user/edit');
-      }
-      if(!updatedUser) {
-        res.redirect('/user/edit');
-      }
-      res.redirect('/user/show/'+id);
-    });
-  },
-
-	
-	destroy: function (req,res) {
-		var id = req.param('id');
-		if (!id) return res.send("No id specified.",500);
-
-		User.find(id, function foundUser(err, user) {
-			if (err) return res.send(err,500);
-			if (!user) return res.send("No user with that id exists.",404);
-
-			User.destroy(id, function userDestroyed(err) {
-				if (err) return res.send(err,500);
-
-				return res.redirect('/user');
-			});
-			
-		})
-	}
-
+    /**
+     * Overrides for the settings in `config/controllers.js`
+     * (specific to userController)
+     */
+    _config: {}
 };

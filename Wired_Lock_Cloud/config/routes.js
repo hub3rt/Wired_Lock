@@ -36,27 +36,11 @@ module.exports.routes = {
     view: 'homepage'
   },
 
-  //Création des vues restraintes
-  'get /user': {
-    controller  : 'UserController',
-    action    : 'index'
-  },
-  'get /user/:id': {
-    controller  : 'UserController',
-    action    : 'find'
-  },
-  'post /user': {
-    controller  : 'UserController',
-    action    : 'create'
-  },
-  'put /user/:id': {
-    controller  : 'UserController',
-    action    : 'update'
-  },
-  'delete /user/:id': {
-    controller  : 'UserController',
-    action    : 'destroy'
-  }
+  //Création des routes restraintes
+  'get /user/:id?': 'UserController.find',
+  'post /user': 'UserController.create',
+  'put /user/:id?': 'UserController.update',
+  'delete /user/:id?': 'UserController.destroy'
 
 
   /***************************************************************************

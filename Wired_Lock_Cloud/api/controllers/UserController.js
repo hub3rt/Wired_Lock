@@ -121,7 +121,7 @@ module.exports = {
 
             if (!result) return res.notFound();
 
-            user.destroy(id, function(err) {
+            User.destroy(id, function(err) {
 
                 if (err) return next(err);
 

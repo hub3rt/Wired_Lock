@@ -12,9 +12,8 @@ module.exports = {
   		type: 'int',
   		required: true
   	},
-  	owners: {
-  		collection: 'User',
-  		via: 'nfcCards'
+  	user: {
+  		model: 'User'
   	}
   }
 };

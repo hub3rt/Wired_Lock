@@ -10,11 +10,11 @@ module.exports = {
   attributes: {
   	date:'date',
   	userName:{
-  		name:'User',
+  		collection:'User',
   		via: 'name'
   	},
   	doorName:{
-  		name: 'Door',
+  		collection: 'Door',
   		via: 'name'
   	},
   	info: 'String',

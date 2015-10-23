@@ -14,9 +14,9 @@ module.exports = {
   	},
   	state: {
   		type:'boolean',
-		required: true
+		  required: true
   	},
-  	owners: {
+  	users: {
   		collection: 'User',
   		via: 'doors'
   	}

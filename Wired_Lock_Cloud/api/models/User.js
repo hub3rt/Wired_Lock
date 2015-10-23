@@ -18,16 +18,10 @@ module.exports = {
   		required: true,
   		unique: true
   	},
-  	nfcCards:{
-  		collection: 'Nfc',
-  		via: 'owners',
-  		dominant: true
-  	},
   	doors:{
   		collection: 'Door',
-  		via: 'owners',
+  		via: 'users',
   		dominant: true
   	}
   }
 };
-

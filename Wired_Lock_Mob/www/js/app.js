@@ -54,7 +54,7 @@ angular.module('starter', ['ionic', 'starter.controllers.dashboard', 'starter.se
 		url: '/dash',
 		views: {
 			'connection': {
-				templateUrl: 'templates/dashboard/t_connection.html',
+				templateUrl: 'templates/dashboard/connection.html',
 				controller: 'DashCtrl'
 			},
 		}

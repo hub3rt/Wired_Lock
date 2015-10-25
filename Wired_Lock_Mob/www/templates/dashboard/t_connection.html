@@ -1,0 +1,25 @@
+<ion-view view-title="Dashboard">
+	<ion-content class="padding">
+		<div class="list card">
+			<div class="item item-divider">Connexion</div>
+			<div class="item item-body">
+				<div>
+					<form ng-submit="connection(login,password)">
+						<div class="list">
+							<label class="item item-input">
+								<input type="text"ng-model="$scope.user.login"  placeholder="Login">
+							</label>
+							<label class="item item-input">
+								<input type="password" ng-model="$scope.user.password" placeholder="Password">
+							</label>
+							<button type="submit" class="button button-block button-positive">Se connecter</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</ion-content>
+</ion-view>
+
+

@@ -1,5 +1,5 @@
-angular.module('starter.controllers.dashboard', ['ionic'])
-	.controller('DashboardCtrl', ['$scope', '$state' , function($scope,$state) {
+angular.module('starter.controllers.dashboard', ['ionic','authserv.service'])
+	.controller('DashboardCtrl', ['$scope', '$state' ,'AuthServ', function($scope,$state,AuthServ) {
 
 	$scope.dash = {};
 	$scope.dashlists = [
@@ -12,18 +12,15 @@ angular.module('starter.controllers.dashboard', ['ionic'])
 	{ title: '18h55',
 	  content: 'Fermture porte de garage par Nicolas'	 },
 ];
-$scope.test = 'fack';
 
-	$scope.loginConnection = function(){
 
-		var login = $scope.dash.login;
+	$scope.connection = function(){
+
+		var name = $scope.dash.name;
 		var password = $scope.dash.password;
 		
-		if(login == 'nicolas'){
-			$state.go('dashboard',null,{reload:true});
-		}else{
-			$state.go('tab.dash',null,{reload:true});
-		}
+		$scope.res = AuthServ.getConnexion(name,password);
+	
 	};
 
 

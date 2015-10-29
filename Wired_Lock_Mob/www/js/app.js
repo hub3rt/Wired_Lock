@@ -6,7 +6,7 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers.dashboard', 'starter.services','starter.controllers.home',
-						   'starter.controllers.account'])
+						   'authserv.service'])
 
 	.run(function($ionicPlatform) {
 	$ionicPlatform.ready(function() {

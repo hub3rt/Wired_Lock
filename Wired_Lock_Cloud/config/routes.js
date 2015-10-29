@@ -36,6 +36,9 @@ module.exports.routes = {
     view: 'homepage'
   },
 
+  'post /api/login': 'AuthController.login',
+  'get /api/refresh': 'AuthController.refresh',
+
   //Création des routes restraintes pour user
   'get /user/:id?': 'UserController.find',
   'post /user': 'UserController.create',

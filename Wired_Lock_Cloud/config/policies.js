@@ -26,17 +26,10 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-   '*': true
-
-   /*[ 'basicAuth', 'passport', 'sessionAuth' ],
- 
-  AuthController: {
-    '*': [ 'passport' ]
-  }
-
-  UserController: {
-    'create': true
-  }*/
+   '*': 'authenticated',
+    AuthController : {
+      'login' : []
+    }
 
 
   /***************************************************************************

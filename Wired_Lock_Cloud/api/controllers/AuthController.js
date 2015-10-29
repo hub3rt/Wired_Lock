@@ -7,18 +7,18 @@
 
 module.exports = {
     login: function(req,res){
-        var email = req.param('email');
+        var name = req.param('name');
         var password = req.param('password');
-        if(!email || !password) return res.json(401,{err:'email and password are required'})
-        User.findOne({email:email}, function(err,user){
+        if(!name || !password) return res.json(401,{err:'name and password are required'})
+        User.findOne({name:name}, function(err,user){
             if(err)console.log(err);
             if(err) return res.json(403, {err:'forbidden'});
-            if(!user) return res.json(401,{err:'invalid email or password'});
+            if(!user) return res.json(401,{err:'invalid name or password'});
             User.comparePassword(password,user, function(err,valid){
                 if(err)console.log(err);
                 if(err) return res.json(403, {err:'forbidden'});
-                if(!valid)return res.json(401,{err:'invalid email or password'});
-                token = JwtHandler.generate({email:user.email,id: user.id});
+                if(!valid)return res.json(401,{err:'invalid name or password'});
+                token = JwtHandler.generate({name:user.name,id: user.id});
                 user.token = token;
                 user.save(function(err){
                     if(err) return res.json(403, {err:'forbidden'});
@@ -37,8 +37,8 @@ module.exports = {
 
         if(user){
             var decoded = JwtHandler.decode(user.refreshToken);
-            if(decoded.email === user.email){
-                token = JwtHandler.generate({email:user.email,id: user.id});
+            if(decoded.name === user.name){
+                token = JwtHandler.generate({name:user.name,id: user.id});
                 user.token = token;
                 user.save(function(err){
                     if(err) return res.json(403, {err:'forbidden'});
